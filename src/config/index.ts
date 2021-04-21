@@ -1,5 +1,7 @@
 import { TypeOrmModuleOptions } from '@nestjs/typeorm';
 
+export const PROJECT_PORT = 3002;
+
 export default {
   type: 'mysql',
   host: 'localhost',
