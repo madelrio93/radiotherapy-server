@@ -9,7 +9,10 @@ export class TreatmentFileResolver {
   constructor(private readonly treatmentFileService: TreatmentFileService) {}
 
   @Mutation(() => TreatmentFile)
-  createTreatmentFile(@Args('createTreatmentFileInput') createTreatmentFileInput: CreateTreatmentFileInput) {
+  createTreatmentFile(
+    @Args('createTreatmentFileInput')
+    createTreatmentFileInput: CreateTreatmentFileInput
+  ) {
     return this.treatmentFileService.create(createTreatmentFileInput);
   }
 
@@ -24,8 +27,14 @@ export class TreatmentFileResolver {
   }
 
   @Mutation(() => TreatmentFile)
-  updateTreatmentFile(@Args('updateTreatmentFileInput') updateTreatmentFileInput: UpdateTreatmentFileInput) {
-    return this.treatmentFileService.update(updateTreatmentFileInput.id, updateTreatmentFileInput);
+  updateTreatmentFile(
+    @Args('updateTreatmentFileInput')
+    updateTreatmentFileInput: UpdateTreatmentFileInput
+  ) {
+    return this.treatmentFileService.update(
+      updateTreatmentFileInput.id,
+      updateTreatmentFileInput
+    );
   }
 
   @Mutation(() => TreatmentFile)
