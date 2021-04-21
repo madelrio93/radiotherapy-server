@@ -9,9 +9,9 @@ export default {
   username: 'root',
   password: '',
   database: 'radiotherapy',
-  entities: [`${__dirname}/**/*.entity{.ts,.js}`],
-  migrations: [`${__dirname}/database/migrations/**/*.ts`],
+  entities: ['src/**/*.entity{.ts,.js}'],
+  migrations: ['src/database/migrations/**/*.ts'],
   cli: {
-    migrationsDir: `${__dirname}/database/migrations`,
+    migrationsDir: 'src/database/migrations',
   },
 } as TypeOrmModuleOptions;

@@ -5,7 +5,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { TreatmentFile } from './entities/treatment-file.entity';
 
 @Module({
-  providers: [TreatmentFileResolver, TreatmentFileService],
   imports: [TypeOrmModule.forFeature([TreatmentFile])],
+  providers: [TreatmentFileResolver, TreatmentFileService],
 })
 export class TreatmentFileModule {}
