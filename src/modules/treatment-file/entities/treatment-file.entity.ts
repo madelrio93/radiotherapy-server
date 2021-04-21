@@ -1,7 +1,10 @@
-import { ObjectType, Field, Int } from '@nestjs/graphql';
+import { ObjectType, Field } from '@nestjs/graphql';
+import { Column, Entity } from 'typeorm';
 
 @ObjectType()
+@Entity('treatments-files')
 export class TreatmentFile {
-  @Field(() => Int, { description: 'Example field (placeholder)' })
-  exampleField: number;
+  @Field(() => String)
+  @Column('varchar', { name: 'status' })
+  status: string;
 }

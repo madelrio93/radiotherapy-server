@@ -5,7 +5,7 @@ import { UpdateTreatmentFileInput } from './dto/update-treatment-file.input';
 @Injectable()
 export class TreatmentFileService {
   create(createTreatmentFileInput: CreateTreatmentFileInput) {
-    return 'This action adds a new treatmentFile';
+    return `This action adds a new treatmentFile ${createTreatmentFileInput}`;
   }
 
   findAll() {
@@ -17,7 +17,8 @@ export class TreatmentFileService {
   }
 
   update(id: number, updateTreatmentFileInput: UpdateTreatmentFileInput) {
-    return `This action updates a #${id} treatmentFile`;
+    return `This action updates a # ${id} input ${updateTreatmentFileInput})
+    } treatmentFile`;
   }
 
   remove(id: number) {
