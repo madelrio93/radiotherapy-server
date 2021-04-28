@@ -1,29 +1,29 @@
-import { Resolver, Query, Mutation, Args, Int } from '@nestjs/graphql';
+import { Resolver, Query, Args, Int, Mutation } from '@nestjs/graphql';
 import { TreatmentFileService } from './treatment-file.service';
 import { TreatmentFile } from './entities/treatment-file.entity';
 import { CreateTreatmentFileInput } from './dto/create-treatment-file.input';
 import { UpdateTreatmentFileInput } from './dto/update-treatment-file.input';
+//import { UpdateTreatmentFileInput } from './dto/update-treatment-file.input';
 
 @Resolver(() => TreatmentFile)
 export class TreatmentFileResolver {
-  constructor(private readonly treatmentFileService: TreatmentFileService) {}
+  constructor(private readonly _treatmentFileService: TreatmentFileService) {}
 
-  @Mutation(() => TreatmentFile)
-  createTreatmentFile(
-    @Args('createTreatmentFileInput')
-    createTreatmentFileInput: CreateTreatmentFileInput
-  ) {
-    return this.treatmentFileService.create(createTreatmentFileInput);
-  }
-
-  @Query(() => [TreatmentFile], { name: 'treatmentFile' })
+  @Query(() => [TreatmentFile], { name: 'treatmentsFiles' })
   findAll() {
-    return this.treatmentFileService.findAll();
+    return this._treatmentFileService.findAll();
   }
 
   @Query(() => TreatmentFile, { name: 'treatmentFile' })
   findOne(@Args('id', { type: () => Int }) id: number) {
-    return this.treatmentFileService.findOne(id);
+    return this._treatmentFileService.findOne(id);
+  }
+
+  @Mutation(() => TreatmentFile)
+  createTreatmentFile(
+    @Args('createTreatmentFile') createTreatmentFile: CreateTreatmentFileInput
+  ): Promise<TreatmentFile> {
+    return this._treatmentFileService.create(createTreatmentFile);
   }
 
   @Mutation(() => TreatmentFile)
@@ -31,14 +31,11 @@ export class TreatmentFileResolver {
     @Args('updateTreatmentFileInput')
     updateTreatmentFileInput: UpdateTreatmentFileInput
   ) {
-    return this.treatmentFileService.update(
-      updateTreatmentFileInput.id,
-      updateTreatmentFileInput
-    );
+    return this._treatmentFileService.update(updateTreatmentFileInput);
   }
 
-  @Mutation(() => TreatmentFile)
+  @Mutation(() => Boolean)
   removeTreatmentFile(@Args('id', { type: () => Int }) id: number) {
-    return this.treatmentFileService.remove(id);
+    return this._treatmentFileService.remove(id);
   }
 }
