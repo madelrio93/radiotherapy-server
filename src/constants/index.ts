@@ -7,6 +7,8 @@ export const SPECIALISTS = 'specialists';
 
 export const EQUIPMENTS = 'equipments';
 
+export const LOCATIONS = 'locations';
+
 /**-----------Enums------------------ */
 export enum Status {
   NO_TRATADO = 'no tratado',

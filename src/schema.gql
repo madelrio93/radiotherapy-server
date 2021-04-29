@@ -2,9 +2,8 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
-input CreateEquipmentInput {
-  """Example field (placeholder)"""
-  exampleField: Int!
+input CreateCommonInput {
+  name: String!
 }
 
 input CreateSpecialistInput {
@@ -34,14 +33,23 @@ type Equipment {
   treatmentsFiles: [TreatmentFile!]!
 }
 
+type Location {
+  id: Float!
+  name: String!
+  treatmentsFiles: [TreatmentFile!]!
+}
+
 type Mutation {
-  createEquipment(createEquipmentInput: CreateEquipmentInput!): Equipment!
+  createEquipment(createEquipmentInput: CreateCommonInput!): Equipment!
+  createLocation(createLocationInput: CreateCommonInput!): Location!
   createSpecialist(newSpecialist: CreateSpecialistInput!): Specialist!
   createTreatmentFile(createTreatmentFile: CreateTreatmentFileInput!): TreatmentFile!
-  removeEquipment(id: Int!): Equipment!
+  removeEquipment(id: ID!): Equipment!
+  removeLocation(id: ID!): ID!
   removeSpecialist(id: ID!): ID!
   removeTreatmentFile(id: Int!): Boolean!
-  updateEquipment(updateEquipmentInput: UpdateEquipmentInput!): Equipment!
+  updateEquipment(updateEquipmentInput: UpdateCommonInput!): Equipment!
+  updateLocation(updateLocationInput: UpdateCommonInput!): Location!
   updateSpecialist(updateSpecialistInput: UpdateSpecialistInput!): Specialist!
   updateTreatmentFile(updateTreatmentFileInput: UpdateTreatmentFileInput!): TreatmentFile!
 }
@@ -73,7 +81,10 @@ input PatientInput {
 }
 
 type Query {
-  equipment(id: Int!): Equipment!
+  Location(id: ID!): Location!
+  Locations: [Location!]!
+  equipment(id: ID!): Equipment!
+  equipments: [Equipment!]!
   specialist(id: ID!): Specialist!
   specialists: [Specialist!]!
   treatmentFile(id: Int!): TreatmentFile!
@@ -92,15 +103,15 @@ type TreatmentFile {
   createAt: Date!
   equipment: Equipment!
   id: Float!
+  location: Location!
   patient: Patient!
   speciaList: Specialist!
   status: String!
 }
 
-input UpdateEquipmentInput {
-  """Example field (placeholder)"""
-  exampleField: Int
-  id: Int!
+input UpdateCommonInput {
+  id: Float!
+  name: String
 }
 
 input UpdateSpecialistInput {

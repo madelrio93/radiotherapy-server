@@ -7,12 +7,14 @@ import { TreatmentFile } from './entities/treatment-file.entity';
 import { Patient } from './entities/patient.entity';
 import { SpecialistModule } from '../specialist/specialist.module';
 import { EquipmentModule } from '../equipment/equipment.module';
+import { LocationModule } from '../location/location.module';
 
 @Module({
   imports: [
     TypeOrmModule.forFeature([TreatmentFile, Patient]),
     SpecialistModule,
     EquipmentModule,
+    LocationModule,
   ],
   providers: [TreatmentFileResolver, TreatmentFileService],
 })

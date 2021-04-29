@@ -18,11 +18,7 @@ export class SpecialistService {
   ) {}
 
   public async findAll(): Promise<Specialist[]> {
-    return await this._specialistRepository.find({
-      order: {
-        id: 'DESC',
-      },
-    });
+    return await this._specialistRepository.find();
   }
 
   public async findOne(id: number) {

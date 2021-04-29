@@ -6,7 +6,8 @@ import { PrimaryId } from '../../../shared';
 import { Status, TREATMENTS_FILES } from '../../../constants';
 import { Patient } from './patient.entity';
 import { Specialist } from '../../specialist/entities/specialist.entity';
-import { Equipment } from 'src/modules/equipment/entities/equipment.entity';
+import { Equipment } from '../../equipment/entities/equipment.entity';
+import { Location } from '../../location/entities/location.entity';
 
 @ObjectType()
 @Entity(TREATMENTS_FILES)
@@ -36,7 +37,10 @@ export class TreatmentFile extends PrimaryId {
   @ManyToOne(
     () => Specialist,
     (specialist: Specialist) => specialist.treatmenstFiles,
-    { nullable: false, cascade: true }
+    {
+      nullable: false,
+      cascade: true,
+    }
   )
   speciaList: Promise<Specialist>;
 
@@ -44,16 +48,21 @@ export class TreatmentFile extends PrimaryId {
   @ManyToOne(
     () => Equipment,
     (equipment: Equipment) => equipment.treatmentsFiles,
-    { nullable: false, cascade: true }
+    {
+      nullable: false,
+      cascade: true,
+    }
   )
   equipment: Promise<Equipment>;
 
-  /* @ManyToOne(() => Equipment, (equipment: Equipment) => equipment.treatmentFile, { eager: true, nullable: false })
-    equipment: Equipment;
+  @Field(() => Location)
+  @ManyToOne(() => Location, (location: Location) => location.treatmentsFiles, {
+    nullable: false,
+    cascade: true,
+  })
+  location: Promise<Location>;
 
-    @ManyToOne(() => Location, (location: Location) => location.treatmentFile, { eager: true, nullable: false })
-    location: Location;
-
+  /*
     @ManyToOne(() => Stage, (stage: Stage) => stage.treatmentFile, { eager: true, nullable: false })
     stage: Stage;
 
