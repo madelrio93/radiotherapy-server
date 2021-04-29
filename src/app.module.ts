@@ -1,8 +1,9 @@
 import { Module } from '@nestjs/common';
-import { TreatmentFileModule } from './modules/treatment-file/treatment-file.module';
-import { DatabaseModule } from './database/database.module';
 import { GraphQLModule } from '@nestjs/graphql';
 import { join } from 'path';
+
+import { TreatmentFileModule } from './modules/treatment-file/treatment-file.module';
+import { DatabaseModule } from './database/database.module';
 
 @Module({
   imports: [

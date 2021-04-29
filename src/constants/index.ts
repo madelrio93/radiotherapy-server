@@ -5,6 +5,8 @@ export const PATIENTS = 'patients';
 
 export const SPECIALISTS = 'specialists';
 
+export const EQUIPMENTS = 'equipments';
+
 /**-----------Enums------------------ */
 export enum Status {
   NO_TRATADO = 'no tratado',

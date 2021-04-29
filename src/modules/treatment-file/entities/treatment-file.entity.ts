@@ -6,6 +6,7 @@ import { PrimaryId } from '../../../shared';
 import { Status, TREATMENTS_FILES } from '../../../constants';
 import { Patient } from './patient.entity';
 import { Specialist } from '../../specialist/entities/specialist.entity';
+import { Equipment } from 'src/modules/equipment/entities/equipment.entity';
 
 @ObjectType()
 @Entity(TREATMENTS_FILES)
@@ -38,6 +39,14 @@ export class TreatmentFile extends PrimaryId {
     { nullable: false, cascade: true }
   )
   speciaList: Promise<Specialist>;
+
+  @Field(() => Equipment)
+  @ManyToOne(
+    () => Equipment,
+    (equipment: Equipment) => equipment.treatmentsFiles,
+    { nullable: false, cascade: true }
+  )
+  equipment: Promise<Equipment>;
 
   /* @ManyToOne(() => Equipment, (equipment: Equipment) => equipment.treatmentFile, { eager: true, nullable: false })
     equipment: Equipment;
