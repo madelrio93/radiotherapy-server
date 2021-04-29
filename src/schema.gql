@@ -42,16 +42,28 @@ type Location {
 type Mutation {
   createEquipment(createEquipmentInput: CreateCommonInput!): Equipment!
   createLocation(createLocationInput: CreateCommonInput!): Location!
+  createOrigin(createOriginInput: CreateCommonInput!): Origin!
   createSpecialist(newSpecialist: CreateSpecialistInput!): Specialist!
+  createStage(createStageInput: CreateCommonInput!): Stage!
   createTreatmentFile(createTreatmentFile: CreateTreatmentFileInput!): TreatmentFile!
   removeEquipment(id: ID!): Equipment!
   removeLocation(id: ID!): ID!
+  removeOrigin(id: ID!): ID!
   removeSpecialist(id: ID!): ID!
+  removeStage(id: ID!): ID!
   removeTreatmentFile(id: Int!): Boolean!
   updateEquipment(updateEquipmentInput: UpdateCommonInput!): Equipment!
   updateLocation(updateLocationInput: UpdateCommonInput!): Location!
+  updateOrigin(updateOriginInput: UpdateCommonInput!): Origin!
   updateSpecialist(updateSpecialistInput: UpdateSpecialistInput!): Specialist!
+  updateStage(updateStageInput: UpdateCommonInput!): Stage!
   updateTreatmentFile(updateTreatmentFileInput: UpdateTreatmentFileInput!): TreatmentFile!
+}
+
+type Origin {
+  id: Float!
+  name: String!
+  treatmentsFiles: [TreatmentFile!]!
 }
 
 type Patient {
@@ -85,8 +97,12 @@ type Query {
   Locations: [Location!]!
   equipment(id: ID!): Equipment!
   equipments: [Equipment!]!
+  origin(id: ID!): Origin!
+  origins: [Origin!]!
   specialist(id: ID!): Specialist!
   specialists: [Specialist!]!
+  stage(id: ID!): Stage!
+  stages: [Stage!]!
   treatmentFile(id: Int!): TreatmentFile!
   treatmentsFiles: [TreatmentFile!]!
 }
@@ -98,14 +114,22 @@ type Specialist {
   treatmenstFiles: [TreatmentFile!]!
 }
 
+type Stage {
+  id: Float!
+  name: String!
+  treatmentsFiles: [TreatmentFile!]!
+}
+
 type TreatmentFile {
   consultationDate: Date!
   createAt: Date!
   equipment: Equipment!
   id: Float!
   location: Location!
+  origin: Origin!
   patient: Patient!
   speciaList: Specialist!
+  stage: Stage!
   status: String!
 }
 

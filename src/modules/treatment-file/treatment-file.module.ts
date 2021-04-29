@@ -8,6 +8,8 @@ import { Patient } from './entities/patient.entity';
 import { SpecialistModule } from '../specialist/specialist.module';
 import { EquipmentModule } from '../equipment/equipment.module';
 import { LocationModule } from '../location/location.module';
+import { OriginModule } from '../origin/origin.module';
+import { StageModule } from '../stage/stage.module';
 
 @Module({
   imports: [
@@ -15,6 +17,8 @@ import { LocationModule } from '../location/location.module';
     SpecialistModule,
     EquipmentModule,
     LocationModule,
+    OriginModule,
+    StageModule,
   ],
   providers: [TreatmentFileResolver, TreatmentFileService],
 })

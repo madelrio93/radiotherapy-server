@@ -9,6 +9,10 @@ export const EQUIPMENTS = 'equipments';
 
 export const LOCATIONS = 'locations';
 
+export const ORIGINS = 'origins';
+
+export const STAGE = 'stages';
+
 /**-----------Enums------------------ */
 export enum Status {
   NO_TRATADO = 'no tratado',

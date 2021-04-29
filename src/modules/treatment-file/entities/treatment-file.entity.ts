@@ -8,6 +8,8 @@ import { Patient } from './patient.entity';
 import { Specialist } from '../../specialist/entities/specialist.entity';
 import { Equipment } from '../../equipment/entities/equipment.entity';
 import { Location } from '../../location/entities/location.entity';
+import { Origin } from '../../origin/entities/origin.entity';
+import { Stage } from '../../stage/entities/stage.entity';
 
 @ObjectType()
 @Entity(TREATMENTS_FILES)
@@ -62,10 +64,22 @@ export class TreatmentFile extends PrimaryId {
   })
   location: Promise<Location>;
 
+  @Field(() => Origin)
+  @ManyToOne(() => Origin, (location: Origin) => location.treatmentsFiles, {
+    nullable: false,
+    cascade: true,
+  })
+  origin: Promise<Origin>;
+
+  @Field(() => Stage)
+  @ManyToOne(() => Stage, (location: Stage) => location.treatmentsFiles, {
+    nullable: false,
+    cascade: true,
+  })
+  stage: Promise<Stage>;
+
   /*
     @ManyToOne(() => Stage, (stage: Stage) => stage.treatmentFile, { eager: true, nullable: false })
     stage: Stage;
-
-    @ManyToOne(() => Origin, (origin: Origin) => origin.treatmentFile, { eager: true, nullable: false })
-    origin: Origin*/
+*/
 }
