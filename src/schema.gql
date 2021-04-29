@@ -2,6 +2,11 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
+input CreateSpecialistInput {
+  lastName: String!
+  name: String!
+}
+
 input CreateTreatmentFileInput {
   consultationDate: DateTime!
   patient: PatientInput!
@@ -19,8 +24,11 @@ A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date
 scalar DateTime
 
 type Mutation {
+  createSpecialist(newSpecialist: CreateSpecialistInput!): Specialist!
   createTreatmentFile(createTreatmentFile: CreateTreatmentFileInput!): TreatmentFile!
+  removeSpecialist(id: ID!): ID!
   removeTreatmentFile(id: Int!): Boolean!
+  updateSpecialist(updateSpecialistInput: UpdateSpecialistInput!): Specialist!
   updateTreatmentFile(updateTreatmentFileInput: UpdateTreatmentFileInput!): TreatmentFile!
 }
 
@@ -29,8 +37,9 @@ type Patient {
   age: Float!
   clinic: String!
   id: Float!
-  lastname: String!
+  lastName: String!
   municipality: String!
+  name: String!
   phone: Float!
   province: String!
   sex: String!
@@ -50,8 +59,17 @@ input PatientInput {
 }
 
 type Query {
+  specialist(id: ID!): Specialist!
+  specialists: [Specialist!]!
   treatmentFile(id: Int!): TreatmentFile!
   treatmentsFiles: [TreatmentFile!]!
+}
+
+type Specialist {
+  id: Float!
+  lastName: String!
+  name: String!
+  treatmenstFiles: [TreatmentFile!]!
 }
 
 type TreatmentFile {
@@ -59,7 +77,14 @@ type TreatmentFile {
   createAt: Date!
   id: Float!
   patient: Patient!
+  speciaList: Specialist!
   status: String!
+}
+
+input UpdateSpecialistInput {
+  id: Float!
+  lastName: String
+  name: String
 }
 
 input UpdateTreatmentFileInput {

@@ -3,6 +3,8 @@ export const TREATMENTS_FILES = 'treatments_files';
 
 export const PATIENTS = 'patients';
 
+export const SPECIALISTS = 'specialists';
+
 /**-----------Enums------------------ */
 export enum Status {
   NO_TRATADO = 'no tratado',

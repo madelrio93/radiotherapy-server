@@ -3,15 +3,12 @@ import { Field, ObjectType } from '@nestjs/graphql';
 
 import { PATIENTS, Sex } from '../../../constants';
 import { TreatmentFile } from './treatment-file.entity';
-import { PrimaryId } from '../../../shared';
+
+import { Person } from '../../../shared/person';
 
 @ObjectType()
 @Entity(PATIENTS)
-export class Patient extends PrimaryId {
-  @Field()
-  @Column()
-  lastname: string;
-
+export class Patient extends Person {
   @Field()
   @Column()
   clinic: string;

@@ -5,6 +5,7 @@ import { GraphQLDate } from 'graphql-iso-date';
 import { PrimaryId } from '../../../shared';
 import { Status, TREATMENTS_FILES } from '../../../constants';
 import { Patient } from './patient.entity';
+import { Specialist } from '../../specialist/entities/specialist.entity';
 
 @ObjectType()
 @Entity(TREATMENTS_FILES)
@@ -29,4 +30,24 @@ export class TreatmentFile extends PrimaryId {
     nullable: false,
   })
   patient: Promise<Patient>;
+
+  @Field(() => Specialist)
+  @ManyToOne(
+    () => Specialist,
+    (specialist: Specialist) => specialist.treatmenstFiles,
+    { nullable: false, cascade: true }
+  )
+  speciaList: Promise<Specialist>;
+
+  /* @ManyToOne(() => Equipment, (equipment: Equipment) => equipment.treatmentFile, { eager: true, nullable: false })
+    equipment: Equipment;
+
+    @ManyToOne(() => Location, (location: Location) => location.treatmentFile, { eager: true, nullable: false })
+    location: Location;
+
+    @ManyToOne(() => Stage, (stage: Stage) => stage.treatmentFile, { eager: true, nullable: false })
+    stage: Stage;
+
+    @ManyToOne(() => Origin, (origin: Origin) => origin.treatmentFile, { eager: true, nullable: false })
+    origin: Origin*/
 }
