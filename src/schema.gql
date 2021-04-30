@@ -54,6 +54,7 @@ type Mutation {
   createStage(createStageInput: CreateCommonInput!): Stage!
   createTreatmentFile(createTreatmentFile: CreateTreatmentFileInput!): TreatmentFile!
   createUser(createUserInput: CreateUserInput!): User!
+  login(sigin: SignInDto!): String!
   removeEquipment(id: ID!): Equipment!
   removeLocation(id: ID!): ID!
   removeOrigin(id: ID!): ID!
@@ -126,6 +127,11 @@ type ReadStadisticsDto {
   lastMonth: Float!
   lastYear: Float!
   today: Float!
+}
+
+input SignInDto {
+  password: String!
+  username: String!
 }
 
 type Specialist {

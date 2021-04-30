@@ -10,10 +10,12 @@ import { EquipmentModule } from '../equipment/equipment.module';
 import { LocationModule } from '../location/location.module';
 import { OriginModule } from '../origin/origin.module';
 import { StageModule } from '../stage/stage.module';
+import { AuthModule } from '../auth/auth.module';
 
 @Module({
   imports: [
     TypeOrmModule.forFeature([TreatmentFile, Patient]),
+    AuthModule,
     SpecialistModule,
     EquipmentModule,
     LocationModule,
