@@ -3,15 +3,15 @@ import { TreatmentFileService } from './treatment-file.service';
 import { TreatmentFile } from './entities/treatment-file.entity';
 import { CreateTreatmentFileInput } from './dto/create-treatment-file.input';
 import { UpdateTreatmentFileInput } from './dto/update-treatment-file.input';
-//import { UpdateTreatmentFileInput } from './dto/update-treatment-file.input';
 
 @Resolver(() => TreatmentFile)
 export class TreatmentFileResolver {
   constructor(private readonly _treatmentFileService: TreatmentFileService) {}
 
   @Query(() => [TreatmentFile], { name: 'treatmentsFiles' })
-  findAll() {
-    return this._treatmentFileService.findAll();
+  async findAll() {
+    const treatmentFile = await this._treatmentFileService.findAll();
+    return treatmentFile[0];
   }
 
   @Query(() => TreatmentFile, { name: 'treatmentFile' })
