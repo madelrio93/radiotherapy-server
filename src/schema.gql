@@ -17,6 +17,13 @@ input CreateTreatmentFileInput {
   status: String!
 }
 
+input CreateUserInput {
+  lastName: String!
+  name: String!
+  password: String!
+  username: String!
+}
+
 """
 A date string, such as 2007-12-03, compliant with the `full-date` format outlined in section 5.6 of the RFC 3339 profile of the ISO 8601 standard for representation of dates and times using the Gregorian calendar.
 """
@@ -46,18 +53,21 @@ type Mutation {
   createSpecialist(newSpecialist: CreateSpecialistInput!): Specialist!
   createStage(createStageInput: CreateCommonInput!): Stage!
   createTreatmentFile(createTreatmentFile: CreateTreatmentFileInput!): TreatmentFile!
+  createUser(createUserInput: CreateUserInput!): User!
   removeEquipment(id: ID!): Equipment!
   removeLocation(id: ID!): ID!
   removeOrigin(id: ID!): ID!
   removeSpecialist(id: ID!): ID!
   removeStage(id: ID!): ID!
   removeTreatmentFile(id: Int!): Boolean!
+  removeUser(id: ID!): User!
   updateEquipment(updateEquipmentInput: UpdateCommonInput!): Equipment!
   updateLocation(updateLocationInput: UpdateCommonInput!): Location!
   updateOrigin(updateOriginInput: UpdateCommonInput!): Origin!
   updateSpecialist(updateSpecialistInput: UpdateSpecialistInput!): Specialist!
   updateStage(updateStageInput: UpdateCommonInput!): Stage!
   updateTreatmentFile(updateTreatmentFileInput: UpdateTreatmentFileInput!): TreatmentFile!
+  updateUser(updateUserInput: UpdateUserInput!): User!
 }
 
 type Origin {
@@ -106,6 +116,8 @@ type Query {
   stages: [Stage!]!
   treatmentFile(id: Int!): TreatmentFile!
   treatmentsFiles: [TreatmentFile!]!
+  user(id: ID!): User!
+  users: [User!]!
 }
 
 type ReadStadisticsDto {
@@ -158,4 +170,22 @@ input UpdateTreatmentFileInput {
   id: Int!
   patient: PatientInput
   status: String
+}
+
+input UpdateUserInput {
+  id: ID!
+  lastName: String
+  name: String
+  password: String
+  username: String
+}
+
+type User {
+  active: Boolean!
+  id: Float!
+  isAdmin: Boolean!
+  lastName: String!
+  name: String!
+  password: String!
+  username: String!
 }

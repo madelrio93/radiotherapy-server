@@ -13,6 +13,8 @@ export const ORIGINS = 'origins';
 
 export const STAGE = 'stages';
 
+export const USERS = 'users';
+
 /**-----------Enums------------------ */
 export enum Status {
   NO_TRATADO = 'no tratado',
