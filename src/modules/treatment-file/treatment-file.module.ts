@@ -21,5 +21,6 @@ import { StageModule } from '../stage/stage.module';
     StageModule,
   ],
   providers: [TreatmentFileResolver, TreatmentFileService],
+  exports: [TreatmentFileService],
 })
 export class TreatmentFileModule {}

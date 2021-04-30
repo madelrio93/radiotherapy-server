@@ -97,6 +97,7 @@ type Query {
   Locations: [Location!]!
   equipment(id: ID!): Equipment!
   equipments: [Equipment!]!
+  getStadistics: ReadStadisticsDto!
   origin(id: ID!): Origin!
   origins: [Origin!]!
   specialist(id: ID!): Specialist!
@@ -105,6 +106,14 @@ type Query {
   stages: [Stage!]!
   treatmentFile(id: Int!): TreatmentFile!
   treatmentsFiles: [TreatmentFile!]!
+}
+
+type ReadStadisticsDto {
+  afternoon: Float!
+  all: Float!
+  lastMonth: Float!
+  lastYear: Float!
+  today: Float!
 }
 
 type Specialist {

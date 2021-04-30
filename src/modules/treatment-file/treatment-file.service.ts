@@ -1,6 +1,7 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { Between, Repository } from 'typeorm';
+import moment from 'moment';
 
 import { TREATMENT_FILE_NOT_FOUND } from '../../constants';
 import { CreateTreatmentFileInput } from './dto/create-treatment-file.input';
@@ -34,8 +35,8 @@ export class TreatmentFileService extends PatientUtils {
     return await this._treatmentFileRepository.save(treatment);
   }
 
-  public async findAll(): Promise<TreatmentFile[]> {
-    return await this._treatmentFileRepository.find();
+  public async findAll(): Promise<[TreatmentFile[], number]> {
+    return await this._treatmentFileRepository.findAndCount();
   }
 
   public async findOne(id: number): Promise<TreatmentFile> {
@@ -69,5 +70,29 @@ export class TreatmentFileService extends PatientUtils {
       return await this.deletePatient((await (await treatmentFile).patient).id);
 
     return (await this._treatmentFileRepository.delete(id)).affected;
+  }
+
+  /**
+   * Find range of date
+   */
+  public async findBetweenDates(
+    dates: Date[]
+  ): Promise<[TreatmentFile[], number]> {
+    if (!dates[1]) dates[1] = moment().toDate();
+    const data = await this._treatmentFileRepository.findAndCount({
+      consultationDate: Between(dates[0], dates[1]),
+    });
+    return data;
+  }
+
+  /**
+   * Find a treatment file by date
+   */
+  public async findByDate(date: Date): Promise<[TreatmentFile[], number]> {
+    return await this._treatmentFileRepository.findAndCount({
+      where: {
+        createAt: date,
+      },
+    });
   }
 }
