@@ -1,4 +1,4 @@
-import { Resolver, Query, Args, Int, Mutation } from '@nestjs/graphql';
+import { Resolver, Query, Args, Int, Mutation, ID } from '@nestjs/graphql';
 import { TreatmentFileService } from './treatment-file.service';
 import { TreatmentFile } from './entities/treatment-file.entity';
 import { CreateTreatmentFileInput } from './dto/create-treatment-file.input';
@@ -34,7 +34,7 @@ export class TreatmentFileResolver {
     return this._treatmentFileService.update(updateTreatmentFileInput);
   }
 
-  @Mutation(() => Boolean)
+  @Mutation(() => ID)
   removeTreatmentFile(@Args('id', { type: () => Int }) id: number) {
     return this._treatmentFileService.remove(id);
   }

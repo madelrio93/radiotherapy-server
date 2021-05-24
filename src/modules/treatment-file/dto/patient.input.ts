@@ -10,7 +10,12 @@ export class Patient {
   @Field()
   @IsString()
   @IsNotEmpty()
-  lastname: string;
+  name: string;
+
+  @Field()
+  @IsString()
+  @IsNotEmpty()
+  lastName: string;
 
   @Field()
   @IsString()

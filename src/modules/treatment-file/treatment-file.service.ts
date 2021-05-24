@@ -9,6 +9,11 @@ import { UpdateTreatmentFileInput } from './dto/update-treatment-file.input';
 import { Patient } from './entities/patient.entity';
 import { TreatmentFile } from './entities/treatment-file.entity';
 import { PatientUtils } from './utils/patients';
+import { Specialist } from '../specialist/entities/specialist.entity';
+import { Equipment } from '../equipment/entities/equipment.entity';
+import { Origin } from '../origin/entities/origin.entity';
+import { Location } from '../location/entities/location.entity';
+import { Stage } from '../stage/entities/stage.entity';
 
 @Injectable()
 export class TreatmentFileService extends PatientUtils {
@@ -31,6 +36,21 @@ export class TreatmentFileService extends PatientUtils {
     treatment.patient = Promise.resolve({
       ...treatmentFile.patient,
     } as Patient);
+    treatment.speciaList = Promise.resolve({
+      ...treatmentFile.speciaList,
+    } as Specialist);
+    treatment.equipment = Promise.resolve({
+      ...treatmentFile.equipment,
+    } as Equipment);
+    treatment.location = Promise.resolve({
+      ...treatmentFile.location,
+    } as Location);
+    treatment.origin = Promise.resolve({
+      ...treatmentFile.origin,
+    } as Origin);
+    treatment.stage = Promise.resolve({
+      ...treatmentFile.stage,
+    } as Stage);
 
     return await this._treatmentFileRepository.save(treatment);
   }
@@ -51,12 +71,17 @@ export class TreatmentFileService extends PatientUtils {
     updateTreatmentFile: UpdateTreatmentFileInput
   ): Promise<TreatmentFile> {
     const { id } = updateTreatmentFile;
-    this.findOne(id);
-    updateTreatmentFile.patient.id &&
+
+    const result = await this.findOne(id);
+
+    updateTreatmentFile?.patient &&
       (await this.createPatient(updateTreatmentFile.patient));
-    return await this._treatmentFileRepository.save({
+
+    await this._treatmentFileRepository.save({
       ...updateTreatmentFile,
     } as unknown);
+
+    return result;
   }
 
   public async remove(id: number) {
@@ -69,7 +94,11 @@ export class TreatmentFileService extends PatientUtils {
     if (treatment.length === 1)
       return await this.deletePatient((await (await treatmentFile).patient).id);
 
-    return (await this._treatmentFileRepository.delete(id)).affected;
+    const isAffected = (await this._treatmentFileRepository.delete(id))
+      .affected;
+    if (isAffected) {
+      return id;
+    }
   }
 
   /**

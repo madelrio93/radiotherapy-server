@@ -53,11 +53,13 @@ export class UserService {
   }
 
   public async findByUsername(username: string) {
-    return await this._userRepository.findOne({
-      where: {
-        username: username,
-      },
-    });
+    return await this._userRepository
+      .createQueryBuilder('users')
+      .where({
+        username,
+      })
+      .addSelect('users.password')
+      .getOne();
   }
 
   private isUser(user: User) {
