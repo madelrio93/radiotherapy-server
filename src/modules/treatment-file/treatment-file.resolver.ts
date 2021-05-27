@@ -19,6 +19,16 @@ export class TreatmentFileResolver {
     return this._treatmentFileService.findOne(id);
   }
 
+  @Query(() => [TreatmentFile], { name: 'treatmentsFilesByPatienFileCLinic' })
+  findByFile(@Args('clinic', { type: () => String }) clinic: string) {
+    return this._treatmentFileService.findByFile(clinic);
+  }
+
+  @Query(() => [TreatmentFile], { name: 'treatmentsFilesByStatus' })
+  getALlByStatus(@Args('status', { type: () => String }) status: string) {
+    return this._treatmentFileService.findALlByStatus(status);
+  }
+
   @Mutation(() => TreatmentFile)
   createTreatmentFile(
     @Args('createTreatmentFile') createTreatmentFile: CreateTreatmentFileInput

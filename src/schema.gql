@@ -123,6 +123,8 @@ type Query {
   stages: [Stage!]!
   treatmentFile(id: Int!): TreatmentFile!
   treatmentsFiles: [TreatmentFile!]!
+  treatmentsFilesByPatienFileCLinic(clinic: String!): [TreatmentFile!]!
+  treatmentsFilesByStatus(status: String!): [TreatmentFile!]!
   user(id: ID!): User!
   users: [User!]!
 }

@@ -68,17 +68,16 @@ export class TreatmentFileService extends PatientUtils {
   }
 
   public async update(
-    updateTreatmentFile: UpdateTreatmentFileInput
+    treatment: UpdateTreatmentFileInput
   ): Promise<TreatmentFile> {
-    const { id } = updateTreatmentFile;
+    const { id } = treatment;
 
     const result = await this.findOne(id);
 
-    updateTreatmentFile?.patient &&
-      (await this.createPatient(updateTreatmentFile.patient));
+    treatment?.patient && (await this.createPatient(treatment.patient));
 
     await this._treatmentFileRepository.save({
-      ...updateTreatmentFile,
+      ...treatment,
     } as unknown);
 
     return result;
@@ -121,6 +120,43 @@ export class TreatmentFileService extends PatientUtils {
     return await this._treatmentFileRepository.findAndCount({
       where: {
         createAt: date,
+      },
+    });
+  }
+
+  /**
+   * Find ALl Treatment Files By Status, else all treatments
+   */
+  public async findALlByStatus(status: string): Promise<TreatmentFile[]> {
+    if (status) {
+      return await this._treatmentFileRepository.find({
+        where: {
+          status: status,
+        },
+      });
+    }
+    return await this.findAll()[0];
+  }
+
+  /**
+   * Find aLl treatment files by patient clinic
+   */
+  public async findByFile(clinic: string): Promise<TreatmentFile[]> {
+    const patient = await this._patientRepository.findOne({
+      where: {
+        clinic,
+      },
+    });
+    if (!patient)
+      throw new NotFoundException(
+        'El expediente clinico no se encuentra asociado a ningun paciente'
+      );
+
+    return await this._treatmentFileRepository.find({
+      where: {
+        patient: {
+          id: patient.id,
+        },
       },
     });
   }
