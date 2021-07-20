@@ -44,8 +44,8 @@ export class TreatmentFileResolver {
     return this._treatmentFileService.update(updateTreatmentFileInput);
   }
 
-  @Mutation(() => ID)
-  removeTreatmentFile(@Args('id', { type: () => Int }) id: number) {
+  @Mutation(() => Int)
+  removeTreatmentFile(@Args('id', { type: () => ID }) id: number) {
     return this._treatmentFileService.remove(id);
   }
 }

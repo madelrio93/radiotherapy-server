@@ -65,7 +65,7 @@ type Mutation {
   removeOrigin(id: ID!): ID!
   removeSpecialist(id: ID!): ID!
   removeStage(id: ID!): ID!
-  removeTreatmentFile(id: Int!): ID!
+  removeTreatmentFile(id: ID!): Int!
   removeUser(id: ID!): User!
   updateEquipment(updateEquipmentInput: UpdateCommonInput!): Equipment!
   updateLocation(updateLocationInput: UpdateCommonInput!): Location!
@@ -158,11 +158,14 @@ type Stage {
 type TreatmentFile {
   consultationDate: Date!
   createAt: Date!
+  description: String!
   equipment: Equipment!
   id: Float!
+  imageIndication: Boolean!
   location: Location!
   origin: Origin!
   patient: Patient!
+  priority: Float!
   speciaList: Specialist!
   stage: Stage!
   status: String!

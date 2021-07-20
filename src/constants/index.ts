@@ -19,7 +19,8 @@ export const USERS = 'users';
 export enum Status {
   NO_TRATADO = 'no tratado',
   TRATADO = 'tratado',
-  EN_EQUIPO = 'en equipo',
+  EN_EQUIPO = 'en espera',
+  EN_TRATAMIENTO = 'en tratamiento',
 }
 
 export enum Sex {

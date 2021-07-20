@@ -12,7 +12,7 @@ export abstract class PatientUtils {
   ): Promise<number> {
     const patient = await this._patientRepository.findOne({
       where: {
-        clinic: treatmentFile.patient.clinic,
+        clinic: (await treatmentFile.patient).clinic,
       },
     });
     if (patient) {

@@ -26,35 +26,6 @@ export class TreatmentFileService extends PatientUtils {
     super(_patientRepository);
   }
 
-  public async create(treatmentFile: CreateTreatmentFileInput) {
-    const patientId = await this.findPatientByClinic(treatmentFile);
-    patientId && (treatmentFile.patient.id = patientId);
-
-    const treatment = new TreatmentFile();
-    treatment.consultationDate = treatmentFile.consultationDate;
-    treatment.status = treatmentFile.status;
-    treatment.patient = Promise.resolve({
-      ...treatmentFile.patient,
-    } as Patient);
-    treatment.speciaList = Promise.resolve({
-      ...treatmentFile.speciaList,
-    } as Specialist);
-    treatment.equipment = Promise.resolve({
-      ...treatmentFile.equipment,
-    } as Equipment);
-    treatment.location = Promise.resolve({
-      ...treatmentFile.location,
-    } as Location);
-    treatment.origin = Promise.resolve({
-      ...treatmentFile.origin,
-    } as Origin);
-    treatment.stage = Promise.resolve({
-      ...treatmentFile.stage,
-    } as Stage);
-
-    return await this._treatmentFileRepository.save(treatment);
-  }
-
   public async findAll(): Promise<[TreatmentFile[], number]> {
     return await this._treatmentFileRepository.findAndCount();
   }
@@ -63,35 +34,65 @@ export class TreatmentFileService extends PatientUtils {
     const treatmentFile = await this._treatmentFileRepository.findOne(id);
 
     if (!treatmentFile) throw new NotFoundException(TREATMENT_FILE_NOT_FOUND);
-
     return treatmentFile;
   }
 
+  public async create(newTreatmentFile: CreateTreatmentFileInput) {
+    const patientId = await this.findPatientByClinic(newTreatmentFile);
+    patientId && (newTreatmentFile.patient.id = patientId);
+
+    const treatmentFile = new TreatmentFile();
+    treatmentFile.consultationDate = newTreatmentFile.consultationDate;
+    treatmentFile.status = newTreatmentFile.status;
+    treatmentFile.patient = Promise.resolve({
+      ...newTreatmentFile.patient,
+    } as Patient);
+    treatmentFile.equipment = { ...newTreatmentFile.equipment } as Equipment;
+    treatmentFile.location = { ...newTreatmentFile.location } as Location;
+    treatmentFile.origin = { ...newTreatmentFile.origin } as Origin;
+    treatmentFile.speciaList = { ...newTreatmentFile.speciaList } as Specialist;
+    treatmentFile.stage = { ...newTreatmentFile.stage } as Stage;
+
+    const result = await this._treatmentFileRepository.save(treatmentFile);
+    return await this.findOne(result.id);
+  }
+
   public async update(
-    treatment: UpdateTreatmentFileInput
+    updateTreatment: UpdateTreatmentFileInput
   ): Promise<TreatmentFile> {
-    const { id } = treatment;
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const a = { ...updateTreatment } as TreatmentFile;
+    console.log(a);
+    const { patient, ...rest } = updateTreatment;
+    const treatmentUpdated = await this._treatmentFileRepository
+      .createQueryBuilder('updateTreatment')
+      .update(TreatmentFile)
+      .set(a)
+      .where('id = :id', { id: updateTreatment.id })
+      .execute();
 
-    const result = await this.findOne(id);
+    patient && (await this.createPatient(patient));
 
-    treatment?.patient && (await this.createPatient(treatment.patient));
+    console.log(treatmentUpdated);
 
-    await this._treatmentFileRepository.save({
-      ...treatment,
-    } as unknown);
-
-    return result;
+    return await this.findOne(rest.id);
   }
 
   public async remove(id: number) {
     const treatmentFile = this.findOne(id);
-    const treatment = await this._treatmentFileRepository.find({
+    const patient = await this._treatmentFileRepository.find({
       where: {
         patient: (await (await treatmentFile).patient).id,
       },
     });
-    if (treatment.length === 1)
-      return await this.deletePatient((await (await treatmentFile).patient).id);
+    if (patient.length === 1) {
+      const isDeleted = await this.deletePatient(
+        (await (await treatmentFile).patient).id
+      );
+      if (isDeleted) {
+        return id;
+      }
+    }
 
     const isAffected = (await this._treatmentFileRepository.delete(id))
       .affected;

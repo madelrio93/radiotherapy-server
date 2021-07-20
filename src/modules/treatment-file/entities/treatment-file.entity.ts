@@ -26,12 +26,23 @@ export class TreatmentFile extends PrimaryId {
   @Column('enum', { name: 'status', enum: Status })
   status: Status;
 
+  @Field()
+  @Column('numeric', { name: 'priority' })
+  priority: number;
+
+  @Field()
+  @Column('varchar', { name: 'description', length: 550 })
+  description: string;
+
+  @Field()
+  @Column('boolean', { name: 'image_indication', default: false })
+  imageIndication: boolean;
+
   @Field(() => Patient)
   @ManyToOne(() => Patient, (patient: Patient) => patient.treatmentsFiles, {
     cascade: true,
-    onUpdate: 'CASCADE',
     onDelete: 'CASCADE',
-    nullable: false,
+    onUpdate: 'CASCADE',
   })
   patient: Promise<Patient>;
 
@@ -40,46 +51,42 @@ export class TreatmentFile extends PrimaryId {
     () => Specialist,
     (specialist: Specialist) => specialist.treatmenstFiles,
     {
+      eager: true,
       nullable: false,
-      cascade: true,
+      onUpdate: 'CASCADE',
     }
   )
-  speciaList: Promise<Specialist>;
+  speciaList: Specialist;
 
   @Field(() => Equipment)
   @ManyToOne(
     () => Equipment,
     (equipment: Equipment) => equipment.treatmentsFiles,
-    {
-      nullable: false,
-      cascade: true,
-    }
+    { eager: true, nullable: false, onUpdate: 'CASCADE' }
   )
-  equipment: Promise<Equipment>;
+  equipment: Equipment;
 
   @Field(() => Location)
   @ManyToOne(() => Location, (location: Location) => location.treatmentsFiles, {
+    eager: true,
     nullable: false,
-    cascade: true,
+    onUpdate: 'CASCADE',
   })
-  location: Promise<Location>;
-
-  @Field(() => Origin)
-  @ManyToOne(() => Origin, (location: Origin) => location.treatmentsFiles, {
-    nullable: false,
-    cascade: true,
-  })
-  origin: Promise<Origin>;
+  location: Location;
 
   @Field(() => Stage)
-  @ManyToOne(() => Stage, (location: Stage) => location.treatmentsFiles, {
+  @ManyToOne(() => Stage, (stage: Stage) => stage.treatmentsFiles, {
+    eager: true,
     nullable: false,
-    cascade: true,
+    onUpdate: 'CASCADE',
   })
-  stage: Promise<Stage>;
+  stage: Stage;
 
-  /*
-    @ManyToOne(() => Stage, (stage: Stage) => stage.treatmentFile, { eager: true, nullable: false })
-    stage: Stage;
-*/
+  @Field(() => Origin)
+  @ManyToOne(() => Origin, (origin: Origin) => origin.treatmentsFiles, {
+    eager: true,
+    nullable: false,
+    onUpdate: 'CASCADE',
+  })
+  origin: Origin;
 }
