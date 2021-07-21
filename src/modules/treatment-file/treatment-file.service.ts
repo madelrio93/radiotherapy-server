@@ -27,7 +27,11 @@ export class TreatmentFileService extends PatientUtils {
   }
 
   public async findAll(): Promise<[TreatmentFile[], number]> {
-    return await this._treatmentFileRepository.findAndCount();
+    return await this._treatmentFileRepository.findAndCount({
+      order: {
+        id: 'DESC',
+      },
+    });
   }
 
   public async findOne(id: number): Promise<TreatmentFile> {
@@ -62,7 +66,6 @@ export class TreatmentFileService extends PatientUtils {
   ): Promise<TreatmentFile> {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const a = { ...updateTreatment } as TreatmentFile;
-    console.log(a);
     const { patient, ...rest } = updateTreatment;
     const treatmentUpdated = await this._treatmentFileRepository
       .createQueryBuilder('updateTreatment')
@@ -128,7 +131,9 @@ export class TreatmentFileService extends PatientUtils {
   /**
    * Find ALl Treatment Files By Status, else all treatments
    */
-  public async findALlByStatus(status: string): Promise<TreatmentFile[]> {
+  public async findALlByStatus(
+    status: string
+  ): Promise<TreatmentFile[] | [TreatmentFile[], number]> {
     if (status) {
       return await this._treatmentFileRepository.find({
         where: {
@@ -136,9 +141,8 @@ export class TreatmentFileService extends PatientUtils {
         },
       });
     }
-    return await this.findAll()[0];
+    return await this.findAll();
   }
-
   /**
    * Find aLl treatment files by patient clinic
    */

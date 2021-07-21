@@ -1,21 +1,16 @@
-import { Field,  ObjectType } from "@nestjs/graphql";
+import { Field, ObjectType } from '@nestjs/graphql';
 
 @ObjectType()
 export class ReadStadisticsDto {
+  @Field()
+  all: number;
 
-    @Field()
-     all: number;
+  @Field()
+  treaty: number;
 
-    @Field()
-    lastYear: number;
+  @Field()
+  notTreated: number;
 
-    @Field()
-     lastMonth: number;
-
-    @Field()
-    afternoon: number;
-
-    @Field()
-    today: number;
-
+  @Field()
+  lastYear: number;
 }

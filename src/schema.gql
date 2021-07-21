@@ -130,11 +130,10 @@ type Query {
 }
 
 type ReadStadisticsDto {
-  afternoon: Float!
   all: Float!
-  lastMonth: Float!
   lastYear: Float!
-  today: Float!
+  notTreated: Float!
+  treaty: Float!
 }
 
 input SignInDto {
