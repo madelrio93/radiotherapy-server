@@ -39,5 +39,5 @@ export class Patient extends Person {
 
   @Field(() => [TreatmentFile])
   @OneToMany(() => TreatmentFile, (treatmentfile) => treatmentfile.patient)
-  treatmentsFiles: Promise<TreatmentFile[]>;
+  treatmentsFiles: TreatmentFile[];
 }

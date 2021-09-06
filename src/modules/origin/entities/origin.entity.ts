@@ -11,7 +11,7 @@ export class Origin extends Common {
   @Field(() => [TreatmentFile])
   @OneToMany(
     () => TreatmentFile,
-    (treatmentFile: TreatmentFile) => treatmentFile.origin
+    (treatmentFile: TreatmentFile) => treatmentFile.origin,
   )
-  treatmentsFiles: Promise<TreatmentFile[]>;
+  treatmentsFiles: TreatmentFile;
 }

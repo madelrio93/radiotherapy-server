@@ -40,11 +40,12 @@ export class TreatmentFile extends PrimaryId {
 
   @Field(() => Patient)
   @ManyToOne(() => Patient, (patient: Patient) => patient.treatmentsFiles, {
+    eager: true,
     cascade: true,
     onDelete: 'CASCADE',
     onUpdate: 'CASCADE',
   })
-  patient: Promise<Patient>;
+  patient: Patient;
 
   @Field(() => Specialist)
   @ManyToOne(
@@ -53,6 +54,7 @@ export class TreatmentFile extends PrimaryId {
     {
       eager: true,
       nullable: false,
+      onDelete: 'CASCADE',
       onUpdate: 'CASCADE',
     }
   )

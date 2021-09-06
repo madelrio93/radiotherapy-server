@@ -8,10 +8,10 @@ import { CreateTreatmentFileInput } from './dto/create-treatment-file.input';
 import { UpdateTreatmentFileInput } from './dto/update-treatment-file.input';
 import { Patient } from './entities/patient.entity';
 import { TreatmentFile } from './entities/treatment-file.entity';
-import { PatientUtils } from './utils/patients';
+import { PatientUtils, generatePDF } from './utils';
+import { Origin } from '../origin/entities/origin.entity';
 import { Specialist } from '../specialist/entities/specialist.entity';
 import { Equipment } from '../equipment/entities/equipment.entity';
-import { Origin } from '../origin/entities/origin.entity';
 import { Location } from '../location/entities/location.entity';
 import { Stage } from '../stage/entities/stage.entity';
 
@@ -44,41 +44,29 @@ export class TreatmentFileService extends PatientUtils {
   public async create(newTreatmentFile: CreateTreatmentFileInput) {
     const patientId = await this.findPatientByClinic(newTreatmentFile);
     patientId && (newTreatmentFile.patient.id = patientId);
-
-    const treatmentFile = new TreatmentFile();
-    treatmentFile.consultationDate = newTreatmentFile.consultationDate;
-    treatmentFile.status = newTreatmentFile.status;
-    treatmentFile.patient = Promise.resolve({
-      ...newTreatmentFile.patient,
-    } as Patient);
-    treatmentFile.equipment = { ...newTreatmentFile.equipment } as Equipment;
-    treatmentFile.location = { ...newTreatmentFile.location } as Location;
-    treatmentFile.origin = { ...newTreatmentFile.origin } as Origin;
-    treatmentFile.speciaList = { ...newTreatmentFile.speciaList } as Specialist;
-    treatmentFile.stage = { ...newTreatmentFile.stage } as Stage;
-
-    const result = await this._treatmentFileRepository.save(treatmentFile);
+    const result = await this._treatmentFileRepository.save(newTreatmentFile);
     return await this.findOne(result.id);
   }
 
   public async update(
     updateTreatment: UpdateTreatmentFileInput
   ): Promise<TreatmentFile> {
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const a = { ...updateTreatment } as TreatmentFile;
-    const { patient, ...rest } = updateTreatment;
-    const treatmentUpdated = await this._treatmentFileRepository
-      .createQueryBuilder('updateTreatment')
-      .update(TreatmentFile)
-      .set(a)
-      .where('id = :id', { id: updateTreatment.id })
-      .execute();
+    const treatment = new TreatmentFile();
+    treatment.consultationDate = updateTreatment.consultationDate;
+    treatment.description = updateTreatment.description;
+    treatment.id = updateTreatment.id;
+    treatment.imageIndication = updateTreatment.imageIndication;
+    treatment.priority = updateTreatment.priority;
+    treatment.origin = { ...updateTreatment.origin } as Origin;
+    treatment.speciaList = { ...updateTreatment.speciaList } as Specialist;
+    treatment.equipment = { ...updateTreatment.equipment } as Equipment;
+    treatment.location = { ...updateTreatment.location } as Location;
+    treatment.origin = { ...updateTreatment.origin } as Origin;
+    treatment.stage = { ...updateTreatment.stage } as Stage;
+    treatment.patient = { ...updateTreatment.patient } as Patient;
 
-    patient && (await this.createPatient(patient));
-
-    console.log(treatmentUpdated);
-
-    return await this.findOne(rest.id);
+    await this._treatmentFileRepository.save(treatment);
+    return await this.findOne(updateTreatment.id);
   }
 
   public async remove(id: number) {
@@ -164,5 +152,9 @@ export class TreatmentFileService extends PatientUtils {
         },
       },
     });
+  }
+
+  async getPDF() {
+    return await generatePDF();
   }
 }

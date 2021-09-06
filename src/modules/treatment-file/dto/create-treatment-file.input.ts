@@ -1,5 +1,7 @@
 import { Field, InputType } from '@nestjs/graphql';
 import { IsDate, IsNotEmpty, IsString } from 'class-validator';
+import { CreateSpecialistInput } from 'src/modules/specialist/dto/create-specialist.input';
+import { UpdateSpecialistInput } from 'src/modules/specialist/dto/update-specialist.input';
 
 import { Status } from '../../../constants';
 import { UpdateCommonInput } from '../../../shared';
@@ -13,6 +15,17 @@ export class CreateTreatmentFileInput {
   consultationDate: Date;
 
   @Field()
+  priority: number;
+
+  @Field()
+  @IsString()
+  description: string;
+
+  @Field()
+  @IsString()
+  imageIndication: boolean;
+
+  @Field()
   @IsString()
   @IsNotEmpty()
   status: Status;
@@ -23,7 +36,7 @@ export class CreateTreatmentFileInput {
 
   @Field()
   @IsNotEmpty()
-  speciaList: UpdateCommonInput;
+  speciaList: UpdateSpecialistInput;
 
   @Field()
   @IsNotEmpty()

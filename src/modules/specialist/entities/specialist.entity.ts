@@ -14,5 +14,5 @@ export class Specialist extends Person {
     () => TreatmentFile,
     (treatmentFile: TreatmentFile) => treatmentFile.speciaList
   )
-  treatmenstFiles: Promise<TreatmentFile[]>;
+  treatmenstFiles: TreatmentFile[];
 }

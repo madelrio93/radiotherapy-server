@@ -11,6 +11,7 @@ import { LocationModule } from '../location/location.module';
 import { OriginModule } from '../origin/origin.module';
 import { StageModule } from '../stage/stage.module';
 import { AuthModule } from '../auth/auth.module';
+import { TreatmentFileController } from './treatment-file.controller';
 
 @Module({
   imports: [
@@ -24,5 +25,6 @@ import { AuthModule } from '../auth/auth.module';
   ],
   providers: [TreatmentFileResolver, TreatmentFileService],
   exports: [TreatmentFileService],
+  controllers: [TreatmentFileController],
 })
 export class TreatmentFileModule {}

@@ -13,11 +13,14 @@ input CreateSpecialistInput {
 
 input CreateTreatmentFileInput {
   consultationDate: DateTime!
+  description: String!
   equipment: UpdateCommonInput!
+  imageIndication: Boolean!
   location: UpdateCommonInput!
   origin: UpdateCommonInput!
   patient: PatientInput!
-  speciaList: UpdateCommonInput!
+  priority: Float!
+  speciaList: UpdateSpecialistInput!
   stage: UpdateCommonInput!
   status: String!
 }
@@ -59,6 +62,7 @@ type Mutation {
   createStage(createStageInput: CreateCommonInput!): Stage!
   createTreatmentFile(createTreatmentFile: CreateTreatmentFileInput!): TreatmentFile!
   createUser(createUserInput: CreateUserInput!): User!
+  getTreatmentFilePDF: Int!
   login(sigin: SignInDto!): String!
   removeEquipment(id: ID!): Equipment!
   removeLocation(id: ID!): ID!
@@ -183,12 +187,15 @@ input UpdateSpecialistInput {
 
 input UpdateTreatmentFileInput {
   consultationDate: DateTime
+  description: String
   equipment: UpdateCommonInput
   id: Int!
+  imageIndication: Boolean
   location: UpdateCommonInput
   origin: UpdateCommonInput
   patient: PatientInput
-  speciaList: UpdateCommonInput
+  priority: Float
+  speciaList: UpdateSpecialistInput
   stage: UpdateCommonInput
   status: String
 }

@@ -11,8 +11,5 @@ export default {
   password: '',
   database: 'radiotherapy',
   entities: ['src/**/*.entity{.ts,.js}'],
-  migrations: ['src/database/migrations/**/*.ts'],
-  cli: {
-    migrationsDir: 'src/database/migrations',
-  },
+  synchronize: true,
 } as TypeOrmModuleOptions;
