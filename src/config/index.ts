@@ -7,9 +7,9 @@ export default {
   type: 'mysql',
   host: 'localhost',
   port: 3306,
-  username: 'root',
-  password: '',
+  username: 'hha',
+  password: '@meijeiras2020*',
   database: 'radiotherapy',
-  entities: ['src/**/*.entity{.ts,.js}'],
+  entities: ['dist/**/*.entity{.ts,.js}'],
   synchronize: true,
 } as TypeOrmModuleOptions;

@@ -21,7 +21,9 @@ export class TreatmentFileService extends PatientUtils {
     @InjectRepository(TreatmentFile)
     private readonly _treatmentFileRepository: Repository<TreatmentFile>,
     @InjectRepository(Patient)
-    public readonly _patientRepository: Repository<Patient>
+    public readonly _patientRepository: Repository<Patient>,
+    @InjectRepository(Location)
+    public readonly _locationRepository: Repository<Location>
   ) {
     super(_patientRepository);
   }
@@ -149,6 +151,24 @@ export class TreatmentFileService extends PatientUtils {
       where: {
         patient: {
           id: patient.id,
+        },
+      },
+    });
+  }
+
+  public async findByLocation(id: number) {
+    const isLocation = await this._locationRepository.findOne({
+      where: {
+        id,
+      },
+    });
+    console.log(isLocation);
+    if (!isLocation)
+      throw new NotFoundException('No se encuentra la localizacion');
+    return await this._treatmentFileRepository.find({
+      where: {
+        location: {
+          id,
         },
       },
     });

@@ -15,7 +15,7 @@ export class TreatmentFileResolver {
   }
 
   @Query(() => TreatmentFile, { name: 'treatmentFile' })
-  findOne(@Args('id', { type: () => Int }) id: number) {
+  findOne(@Args('id', { type: () => ID }) id: number) {
     return this._treatmentFileService.findOne(id);
   }
 
@@ -27,6 +27,11 @@ export class TreatmentFileResolver {
   @Query(() => [TreatmentFile], { name: 'treatmentsFilesByStatus' })
   getALlByStatus(@Args('status', { type: () => String }) status: string) {
     return this._treatmentFileService.findALlByStatus(status);
+  }
+
+  @Query(() => [TreatmentFile], { name: 'treatmentFilesByLocation' })
+  getAllByLocation(@Args('id', { type: () => ID }) id: number) {
+    return this._treatmentFileService.findByLocation(id);
   }
 
   @Mutation(() => TreatmentFile)

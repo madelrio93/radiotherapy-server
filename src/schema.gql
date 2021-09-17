@@ -125,7 +125,8 @@ type Query {
   specialists: [Specialist!]!
   stage(id: ID!): Stage!
   stages: [Stage!]!
-  treatmentFile(id: Int!): TreatmentFile!
+  treatmentFile(id: ID!): TreatmentFile!
+  treatmentFilesByLocation(id: ID!): [TreatmentFile!]!
   treatmentsFiles: [TreatmentFile!]!
   treatmentsFilesByPatienFileCLinic(clinic: String!): [TreatmentFile!]!
   treatmentsFilesByStatus(status: String!): [TreatmentFile!]!
