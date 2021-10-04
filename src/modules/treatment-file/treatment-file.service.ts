@@ -179,7 +179,7 @@ export class TreatmentFileService extends PatientUtils {
   ): Promise<IStatisticsTreatyByEquipment[]> {
     const { connection } = getManager();
     return await connection.query(
-      `SELECT YEAR(consultationDate) as year, COUNT(*) AS value FROM treatments_files WHERE equipmentId = ${id} GROUP BY consultationDate`
+      `SELECT YEAR(consultationDate) as year, COUNT(*) AS value FROM treatments_files WHERE equipmentId = ${id} GROUP BY YEAR(consultationDate)`
     );
   }
 
@@ -188,7 +188,7 @@ export class TreatmentFileService extends PatientUtils {
   ): Promise<any> {
     const { connection } = getManager();
     return await connection.query(
-      `SELECT YEAR(consultationDate) as year, COUNT(*) AS value, image_indication FROM treatments_files WHERE image_indication = ${indication} GROUP BY consultationDate`
+      `SELECT YEAR(consultationDate) as year, COUNT(*) AS value, image_indication FROM treatments_files WHERE image_indication = ${indication} GROUP BY YEAR(consultationDate)`
     );
   }
 
