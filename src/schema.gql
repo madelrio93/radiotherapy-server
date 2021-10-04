@@ -118,7 +118,9 @@ type Query {
   Locations: [Location!]!
   equipment(id: ID!): Equipment!
   equipments: [Equipment!]!
-  getStadistics: ReadStadisticsDto!
+  getStadisticTreatyByEquipment(id: ID!): [ReadStadisticsTBEDto!]!
+  getStadisticWithImageIndication: [ReadStadisticsWithImageIndication!]!
+  getStatisticsByStatus: ReadStadisticsDto!
   origin(id: ID!): Origin!
   origins: [Origin!]!
   specialist(id: ID!): Specialist!
@@ -136,9 +138,21 @@ type Query {
 
 type ReadStadisticsDto {
   all: Float!
-  lastYear: Float!
+  inTreatment: Float!
   notTreated: Float!
   treaty: Float!
+  waiting: Float!
+}
+
+type ReadStadisticsTBEDto {
+  value: Float!
+  year: Float!
+}
+
+type ReadStadisticsWithImageIndication {
+  image_indication: Boolean!
+  value: Float!
+  year: Float!
 }
 
 input SignInDto {

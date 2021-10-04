@@ -1,7 +1,8 @@
 import { Field, ObjectType } from '@nestjs/graphql';
+import { IStatistics } from '../interfaces';
 
 @ObjectType()
-export class ReadStadisticsDto {
+export class ReadStadisticsDto implements IStatistics {
   @Field()
   all: number;
 
@@ -12,5 +13,8 @@ export class ReadStadisticsDto {
   notTreated: number;
 
   @Field()
-  lastYear: number;
+  waiting: number;
+
+  @Field()
+  inTreatment: number;
 }

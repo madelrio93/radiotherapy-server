@@ -1,6 +1,6 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Between, Repository } from 'typeorm';
+import { Between, Repository, getManager } from 'typeorm';
 import moment from 'moment';
 
 import { TREATMENT_FILE_NOT_FOUND } from '../../constants';
@@ -14,6 +14,7 @@ import { Specialist } from '../specialist/entities/specialist.entity';
 import { Equipment } from '../equipment/entities/equipment.entity';
 import { Location } from '../location/entities/location.entity';
 import { Stage } from '../stage/entities/stage.entity';
+import { IStatisticsTreatyByEquipment } from '../statistics/interfaces';
 
 @Injectable()
 export class TreatmentFileService extends PatientUtils {
@@ -162,7 +163,6 @@ export class TreatmentFileService extends PatientUtils {
         id,
       },
     });
-    console.log(isLocation);
     if (!isLocation)
       throw new NotFoundException('No se encuentra la localizacion');
     return await this._treatmentFileRepository.find({
@@ -172,6 +172,24 @@ export class TreatmentFileService extends PatientUtils {
         },
       },
     });
+  }
+
+  public async FindTreatyByEquipment(
+    id: number
+  ): Promise<IStatisticsTreatyByEquipment[]> {
+    const { connection } = getManager();
+    return await connection.query(
+      `SELECT YEAR(consultationDate) as year, COUNT(*) AS value FROM treatments_files WHERE equipmentId = ${id} GROUP BY consultationDate`
+    );
+  }
+
+  public async findCountWhithImageIndication(
+    indication: boolean
+  ): Promise<any> {
+    const { connection } = getManager();
+    return await connection.query(
+      `SELECT YEAR(consultationDate) as year, COUNT(*) AS value, image_indication FROM treatments_files WHERE image_indication = ${indication} GROUP BY consultationDate`
+    );
   }
 
   async getPDF() {
